@@ -1,13 +1,17 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
+import Cookies from "js-cookie";
 import { AppRoutes } from "../../constant/constant";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
-  const navigate = useNavigate
-
+  const navigate = useNavigate();
+  const { setUser, setToken } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     const obj = {
       email: e.target.email.value,
       password: e.target.password.value,
@@ -16,7 +20,21 @@ function Login() {
     axios
       .post(AppRoutes.login, obj)
       .then((res) => {
-        navigate("/site")
+        const token = res?.data?.data?.token;
+        const currentUser = res?.data?.data?.user;
+
+        Cookies.set("token", token, { expires: 7 });
+        setToken(token);
+        setUser(currentUser);
+
+        switch (currentUser.role) {
+          case "admin":
+            navigate("/admin");
+            break;
+          default:
+            navigate("/site");
+            break;
+        }
       })
       .catch((err) => console.log(err.message));
   };
@@ -29,15 +47,12 @@ function Login() {
           <p className="text-2xl">Lorem, ipsum dolor. Lorem, ipsum dolor.</p>
         </div>
         <div className="w-1/2 p-10">
-          <form className="max-w-sm mx-auto">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-sm mx-auto shadow-lg p-4"
+          >
             <h1 className="font-bold text-2xl my-2">Welcome Back</h1>
             <div className="mb-5">
-              <label
-                htmlFor="email"
-                className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
-              >
-                Email
-              </label>
               <input
                 type="email"
                 id="email"
@@ -47,12 +62,6 @@ function Login() {
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
-              >
-                Password
-              </label>
               <input
                 type="password"
                 id="password"
@@ -61,13 +70,20 @@ function Login() {
                 required=""
               />
             </div>
-
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 cursor-pointer hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Login
             </button>
+            <div className="mt-4">
+              <button
+                onClick={() => navigate("/signup")}
+                className="text-white bg-green-700 cursor-pointer hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Create new account
+              </button>
+            </div>
           </form>
         </div>
       </div>

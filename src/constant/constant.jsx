@@ -6,4 +6,5 @@ export const BASE_URL = devURL;
 export const AppRoutes = {
   signup: BASE_URL + "/user/signup",
   login: BASE_URL + "/user/login",
+  getCurrentUser : BASE_URL + "/user/currentUser"
 };
