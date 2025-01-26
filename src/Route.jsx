@@ -17,7 +17,7 @@ import Userspage from "./pages/AdminPages/Pages/Userspage";
 
 function AppRouter() {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   return (
     <>
       <Routes>
@@ -39,7 +39,7 @@ function AppRouter() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<AdminScreens />}>
           <Route index path="/admin" element={<MainScreen />} />
-          <Route path="/admin" element={<Userspage />} />
+          <Route path="/users" element={<Userspage />} />
         </Route>
       </Routes>
     </>

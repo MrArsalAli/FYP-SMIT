@@ -1,7 +1,8 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 function AdminScreens() {
+  const navigate = useNavigate();
   return (
     <div className="h-screen bg-gray-100 flex flex-col md:flex-row shadow">
       <div className="bg-gray-500 w-full md:w-1/5">
@@ -13,10 +14,16 @@ function AdminScreens() {
           ADMIN
         </div>
 
-        <div className="font-bold uppercase text-md md:text-lg hover:bg-black hover:text-white cursor-pointer bg-gray-600 p-4 my-1">
+        <div
+          onClick={() => navigate("/admin")}
+          className="font-bold uppercase text-md md:text-lg hover:bg-black hover:text-white cursor-pointer bg-gray-600 p-4 my-1"
+        >
           Dashboard
         </div>
-        <div className="font-bold uppercase text-md md:text-lg hover:bg-black hover:text-white cursor-pointer bg-gray-600 p-4 my-1">
+        <div
+          onClick={() => navigate("/users")}
+          className="font-bold uppercase text-md md:text-lg hover:bg-black hover:text-white cursor-pointer bg-gray-600 p-4 my-1"
+        >
           Users
         </div>
       </div>

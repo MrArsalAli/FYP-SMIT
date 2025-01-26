@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 function App() {
   const navigate = useNavigate();
-  const { user, token } = useContext(AuthContext);
+  // const { user, token } = useContext(AuthContext);
 
   // switch (user.role) {
   //   case "admin":
@@ -18,7 +18,7 @@ function App() {
     <>
       <div className="min-h-screen container mx-auto">
         <section className="text-gray-600 body-font overflow-hidden">
-          <div className="grid grid-cols-2 container px-5 mx-auto">
+          <div className="grid grid-cols-2 container my-6 px-5 mx-auto">
             <div
               onClick={() => navigate("/weddingLoans")}
               className="shadow-lg cursor-pointer p-12 flex flex-col items-start"
@@ -27,9 +27,8 @@ function App() {
                 Wedding Loans
               </h2>
               <p className="leading-relaxed mb-8">
-                Live-edge letterpress cliche, salvia fanny pack humblebrag
-                narwhal portland. VHS man braid palo santo hoodie brunch trust
-                fund.
+                Make your dream wedding a reality with our easy and affordable
+                wedding loans. Flexible plans tailored for your special day!
               </p>
             </div>
             <div
@@ -40,9 +39,8 @@ function App() {
                 Home Construction Loans
               </h2>
               <p className="leading-relaxed mb-8">
-                Live-edge letterpress cliche, salvia fanny pack humblebrag
-                narwhal portland. VHS man braid palo santo hoodie brunch trust
-                fund.
+                Build your dream home with our customized construction loans.
+                Easy approval and flexible repayment options await!
               </p>
             </div>
             <div
@@ -53,9 +51,8 @@ function App() {
                 Business Startup Loans
               </h2>
               <p className="leading-relaxed mb-8">
-                Live-edge letterpress cliche, salvia fanny pack humblebrag
-                narwhal portland. VHS man braid palo santo hoodie brunch trust
-                fund.
+                Kickstart your entrepreneurial journey with our flexible startup
+                loans. Designed to fuel your business dreams!
               </p>
             </div>
             <div
@@ -66,9 +63,8 @@ function App() {
                 Education Loans
               </h2>
               <p className="leading-relaxed mb-8">
-                Live-edge letterpress cliche, salvia fanny pack humblebrag
-                narwhal portland. VHS man braid palo santo hoodie brunch trust
-                fund.
+                Invest in your future with our education loans. Affordable plans
+                to help you achieve academic excellence!
               </p>
             </div>
           </div>

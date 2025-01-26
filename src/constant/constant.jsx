@@ -8,5 +8,6 @@ export const AppRoutes = {
   login: BASE_URL + "/user/login",
   getCurrentUser: BASE_URL + "/user/currentUser",
   requests: BASE_URL + "/requests/addrequest",
-  getAllRequests : BASE_URL + "/requests/getAllRequests"
+  getAllRequests: BASE_URL + "/requests/getAllRequests",
+  getAllUsers: BASE_URL + "/user/getAllUsers",
 };
