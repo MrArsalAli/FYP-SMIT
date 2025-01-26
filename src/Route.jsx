@@ -13,6 +13,7 @@ import WeddingLoans from "./pages/WeddingLoans";
 import HomeConstructionLoans from "./pages/HomeConstructionLoans";
 import BusinessStartupLoans from "./pages/BusinessStartupLoans";
 import EducationLoans from "./pages/EducationLoans";
+import Userspage from "./pages/AdminPages/Pages/Userspage";
 
 function AppRouter() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function AppRouter() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<AdminScreens />}>
           <Route index path="/admin" element={<MainScreen />} />
+          <Route path="/admin" element={<Userspage />} />
         </Route>
       </Routes>
     </>
