@@ -5,26 +5,26 @@ import { AppRoutes } from "../constant/constant";
 function WeddingLoans() {
   const [loan, setLoan] = useState(0);
   const [deposit, setDeposit] = useState(0);
-  const [category, setCategory] = useState("");
   const [breakdown, setBreakdown] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const calculateBreakdown = (e) => {
+    openModal();
     e.preventDefault();
 
-    console.log(e.target.category.value);
-
-    if (loan > 500000) {
+    let Loan = parseFloat(loan);
+    let Deposit = parseFloat(deposit);
+    if (Loan > 500000) {
       alert("Loan amount cannot exceed 500,000 PKR.");
       return;
     }
-    if (loan <= 0 || deposit <= 0) {
+    if (Loan <= 0 || Deposit <= 0) {
       alert("Please enter valid loan and deposit amounts.");
       return;
     }
-    if (deposit >= loan) {
+    if (Deposit >= Loan) {
       alert(
         "Initial deposit cannot be equal to or greater than the loan amount."
       );
@@ -32,28 +32,21 @@ function WeddingLoans() {
     }
 
     // Subtract the deposit from the loan
-    const loanAfterDeposit = loan - deposit;
+    const loanAfterDeposit = Loan - Deposit;
 
     // Calculate the monthly installment based on the remaining loan amount
     const monthlyInstallment = (loanAfterDeposit / 36).toFixed(2); // 36 months for 3 years
 
     setBreakdown({
-      loan: parseFloat(loan),
-      deposit: parseFloat(deposit),
+      loan: Loan,
+      deposit: Deposit,
       loanAfterDeposit,
       monthlyInstallment,
     });
   };
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.email.value);
 
     const generateRandomPassword = () => {
       return Math.random().toString(36).slice(-8); // Random 8 character password
@@ -143,12 +136,19 @@ function WeddingLoans() {
                 onChange={(e) => setDeposit(e.target.value)}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <h1 className="font-bold">Loan Period: 3 years (36 months)</h1>
             </div>
+            <button
+              onClick={calculateBreakdown}
+              className="cursor-pointer bg-emerald-500 text-white px-4 py-2 rounded font-bold hover:bg-emerald-600"
+            >
+              calculateBreakdown
+            </button>
             <div className="flex items-center justify-between"></div>
             <div>
               <h1 className="font-bold text-3xl text-center">User Info</h1>
+              <p className="text-xs text-center">if interested</p>
               <label className="block text-sm font-medium text-gray-700">
                 CNIC
               </label>
@@ -183,34 +183,42 @@ function WeddingLoans() {
             </div>
             <button
               type="submit"
-              className="my-2 bg-emerald-500 text-white px-4 py-2 rounded font-bold hover:bg-emerald-600"
+              className="my-2 cursor-pointer bg-emerald-500 text-white px-4 py-2 rounded font-bold hover:bg-emerald-600"
             >
               Proceed
             </button>
           </form>
-          <button
-            onClick={calculateBreakdown}
-            className="my-2 bg-emerald-500 text-white px-4 py-2 rounded font-bold hover:bg-emerald-600"
-          >
-            calculateBreakdown
-          </button>
 
-          {breakdown && (
-            <div className="mt-6 p-4 border rounded bg-gray-50">
-              <h2 className="text-xl font-bold mb-4">Loan Breakdown</h2>
-              <p>
-                <strong>Loan Amount:</strong> {breakdown.loan} PKR
-              </p>
-              <p>
-                <strong>Initial Deposit:</strong> {breakdown.deposit} PKR
-              </p>
-              <p>
-                <strong>Monthly Installment:</strong>{" "}
-                {breakdown.monthlyInstallment} PKR
-              </p>
-              <p>
-                <strong>Total Months:</strong> 36
-              </p>
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-opacity-80 flex justify-center items-center z-50">
+              <div className="bg-gray-50 w-full shadow-lg md:w-3/5 lg:w-5/12 rounded-lg p-6 mx-6 ">
+                <div className="flex justify-between">
+                  <h1 className="text-xl font-bold mb-4">Loan Breakdown</h1>
+                  <span
+                    onClick={closeModal}
+                    className="flex flex-end cursor-pointer text-2xl"
+                  >
+                    X
+                  </span>
+                </div>
+                {breakdown && (
+                  <div className="mt-6 p-4 border rounded bg-gray-50">
+                    <p>
+                      <strong>Loan Amount:</strong> {breakdown.loan} PKR
+                    </p>
+                    <p>
+                      <strong>Initial Deposit:</strong> {breakdown.deposit} PKR
+                    </p>
+                    <p>
+                      <strong>Monthly Installment:</strong>{" "}
+                      {breakdown.monthlyInstallment} PKR
+                    </p>
+                    <p>
+                      <strong>Total Months:</strong> 36
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

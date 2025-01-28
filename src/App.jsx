@@ -1,19 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { useNavigate } from "react-router";
 
 function App() {
   const navigate = useNavigate();
-  // const { user, token } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
 
-  // switch (user.role) {
-  //   case "admin":
-  //     navigate("/admin");
-  //     break;
-  //   default:
-  //     navigate("/site");
-  //     break;
-  // }
+  useEffect(() => {
+    if (user && user.role) {
+      switch (user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
+        case "user":
+          navigate("/site");
+          break;
+        default:
+          break;
+      }
+    }
+    return;
+  }, [user, navigate]);
+
   return (
     <>
       <div className="min-h-screen container mx-auto">

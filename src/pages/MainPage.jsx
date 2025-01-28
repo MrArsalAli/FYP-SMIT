@@ -1,117 +1,51 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { AppRoutes } from "../constant/constant";
 
 function MainPage() {
-  return (
-    <div className="min-h-screen container mx-auto">
-      <section className="text-gray-600 body-font overflow-hidden">
-  <div className="container px-5 py-24 mx-auto">
-    <div className="-my-8 divide-y-2 divide-gray-100">
-      <div className="py-8 flex flex-wrap md:flex-nowrap">
-        <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-          <span className="font-semibold title-font text-gray-700">
-            CATEGORY
-          </span>
-          <span className="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
-        </div>
-        <div className="md:flex-grow">
-          <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
-            Bitters hashtag waistcoat fashion axe chia unicorn
-          </h2>
-          <p className="leading-relaxed">
-            Glossier echo park pug, church-key sartorial biodiesel vexillologist
-            pop-up snackwave ramps cornhole. Marfa 3 wolf moon party messenger
-            bag selfies, poke vaporware kombucha lumbersexual pork belly
-            polaroid hoodie portland craft beer.
-          </p>
-          <a className="text-indigo-500 inline-flex items-center mt-4">
-            Learn More
-            <svg
-              className="w-4 h-4 ml-2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div className="py-8 flex flex-wrap md:flex-nowrap">
-        <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-          <span className="font-semibold title-font text-gray-700">
-            CATEGORY
-          </span>
-          <span className="mt-1 text-gray-500 text-sm">12 Jun 2019</span>
-        </div>
-        <div className="md:flex-grow">
-          <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
-            Meditation bushwick direct trade taxidermy shaman
-          </h2>
-          <p className="leading-relaxed">
-            Glossier echo park pug, church-key sartorial biodiesel vexillologist
-            pop-up snackwave ramps cornhole. Marfa 3 wolf moon party messenger
-            bag selfies, poke vaporware kombucha lumbersexual pork belly
-            polaroid hoodie portland craft beer.
-          </p>
-          <a className="text-indigo-500 inline-flex items-center mt-4">
-            Learn More
-            <svg
-              className="w-4 h-4 ml-2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div className="py-8 flex flex-wrap md:flex-nowrap">
-        <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-          <span className="font-semibold title-font text-gray-700">
-            CATEGORY
-          </span>
-          <span className="text-sm text-gray-500">12 Jun 2019</span>
-        </div>
-        <div className="md:flex-grow">
-          <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">
-            Woke master cleanse drinking vinegar salvia
-          </h2>
-          <p className="leading-relaxed">
-            Glossier echo park pug, church-key sartorial biodiesel vexillologist
-            pop-up snackwave ramps cornhole. Marfa 3 wolf moon party messenger
-            bag selfies, poke vaporware kombucha lumbersexual pork belly
-            polaroid hoodie portland craft beer.
-          </p>
-          <a className="text-indigo-500 inline-flex items-center mt-4">
-            Learn More
-            <svg
-              className="w-4 h-4 ml-2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  const { user } = useContext(AuthContext);
+  const [userRequests, setUserRequests] = useState([]);
 
+  useEffect(() => {
+    const fetchUserRequest = async (email) => {
+      try {
+        const response = await axios.get(AppRoutes.getUserRequests, {
+          params: { email },
+        });
+        setUserRequests(response?.data?.data);
+      } catch (error) {
+        console.error("Error fetching requests:", error.message);
+      }
+    };
+    fetchUserRequest(user?.email);
+  }, [user?.email]);
+
+  return (
+    <div className="min-h-screen grid grid-cols-2 container mx-auto">
+        {userRequests.map((data, index) => (
+          <div key={index} className="container p-12">
+            <div className="-my-8 p-4 divide-y-2 shadow-lg divide-gray-100">
+                <h1 className="text-3xl">My Requests For Loan</h1>
+              <div className="my-2 py-8 flex flex-wrap md:flex-nowrap">
+                <div className="md:flex-grow">
+                  <h2 className="text-2xl text-center uppercase font-medium text-gray-900 title-font mb-2">
+                   For: {data.category}
+                  </h2>
+                  <div className="flex justify-between">
+                    <p className="leading-relaxed font-bold text-2xl">{data.name}</p>
+                    <p className="leading-relaxed">
+                      <b>Loan:</b> {data.loan}
+                    </p>
+                    <p className="leading-relaxed">
+                      <b>Initial Deposit:</b> {data.initialdeposit}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

@@ -22,11 +22,9 @@ function Login() {
       .then((res) => {
         const token = res?.data?.data?.token;
         const currentUser = res?.data?.data?.user;
-
         Cookies.set("token", token, { expires: 7 });
         setToken(token);
         setUser(currentUser);
-
         switch (currentUser.role) {
           case "admin":
             navigate("/admin");

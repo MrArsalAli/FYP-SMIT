@@ -5,7 +5,6 @@ import axios from "axios";
 function MainScreen() {
   const [requests, setRequests] = useState([]);
 
-  // Fetch Students
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -21,22 +20,25 @@ function MainScreen() {
   console.log(requests);
 
   return (
-    <div className="h-screen grid grid-cols-2 gap-4 container mx-auto p-10">
+    <div className="grid grid-cols-2 gap-4 container p-10">
       {requests.map((data, index) => (
-        <div key={index} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg  shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div key={index} className="p-6 bg-white border border-gray-200 rounded-lg  shadow-sm">
           <span>
-            <h5 className="mb-2 text-2xl text-center font-semibold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl text-center font-semibold tracking-tight text-gray-900">
               {data.category}
             </h5>
           </span>
-          <p className="font-normal text-gray-500 dark:text-gray-400">
+          <p className="font-normal text-gray-500">
             {data.name}
           </p>
-          <p className="font-normal text-gray-500 dark:text-gray-400">
+          <p className="font-normal text-gray-500">
             {data.email}
           </p>
-          <p className="my-2 font-normal text-gray-500 dark:text-gray-400">
-            Loan : {data.loan}
+          <p className="font-normal text-gray-500">
+           <b>Initial Deposit:</b>  {data.initialdeposit} PKR
+          </p>
+          <p className="font-normal text-gray-500">
+           <b>Loan :</b>   {data.loan} PKR
           </p>
         </div>
       ))}
