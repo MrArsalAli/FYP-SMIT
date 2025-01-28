@@ -53,27 +53,25 @@ function WeddingLoans() {
     };
     const pass = generateRandomPassword();
 
-    try {
-      const obj = {
-        cnic: e.target.cnic.value,
-        email: e.target.email.value,
-        password: pass,
-        name: e.target.name.value,
-        category: e.target.category.value,
-        loan: e.target.loan.value,
-        initialdeposit: e.target.deposit.value,
-      };
+    const obj = {
+      cnic: e.target.cnic.value,
+      email: e.target.email.value,
+      password: pass,
+      name: e.target.name.value,
+      category: e.target.category.value,
+      loan: e.target.loan.value,
+      initialdeposit: e.target.deposit.value,
+    };
 
-      axios
-        .post(AppRoutes.requests, obj)
-        .then((res) => {
-          console.log(res);
-          alert(
-            "Your Account is Made.Please Verify your account from your gmail"
-          );
-        })
-        .catch((err) => console.log(err.message));
-    } catch (error) {}
+    axios
+      .post(AppRoutes.requests, obj)
+      .then((res) => {
+        console.log(res);
+        alert(
+          "Your Account is Made.Please Verify your account from your gmail"
+        );
+      })
+      .catch((err) => console.log(err.message));
 
     console.log("Form submitted");
     setIsPopupOpen(false);

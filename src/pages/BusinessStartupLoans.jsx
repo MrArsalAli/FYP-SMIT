@@ -53,35 +53,32 @@ function BusinessStartupLoans() {
     };
     const pass = generateRandomPassword();
 
-    try {
-      const obj = {
-        cnic: e.target.cnic.value,
-        email: e.target.email.value,
-        password: pass,
-        name: e.target.name.value,
-        category: e.target.category.value,
-        loan: e.target.loan.value,
-        initialdeposit: e.target.deposit.value,
-      };
+    const obj = {
+      cnic: e.target.cnic.value,
+      email: e.target.email.value,
+      password: pass,
+      name: e.target.name.value,
+      category: e.target.category.value,
+      loan: e.target.loan.value,
+      initialdeposit: e.target.deposit.value,
+    };
 
-      axios
-        .post(AppRoutes.requests, obj)
-        .then((res) => {
-          console.log(res);
-          alert(
-            "Your Account is Made.Please Verify your account from your gmail"
-          );
-        })
-        .catch((err) => console.log(err.message));
-    } catch (error) {}
-
-    console.log("Form submitted");
-    setIsPopupOpen(false);
+    axios
+      .post(AppRoutes.requests, obj)
+      .then((res) => {
+        console.log(res);
+        alert(
+          "Your Account is Made.Please Verify your account from your gmail"
+        );
+      })
+      .catch((err) => console.log(err.message));
   };
 
   return (
     <div className="min-h-screen container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-10">Business Startup Loans</h1>
+      <h1 className="text-3xl font-bold text-center my-10">
+        Business Startup Loans
+      </h1>
       <div className="shadow-lg p-4 rounded container mx-auto w-3/6">
         <div className="p-6 max-w-lg mx-auto">
           <form onSubmit={handleSubmit}>
