@@ -1,5 +1,5 @@
 const devURL = "http://localhost:4000";
-const prodURL = "https://fyp-smit-backe-production.up.railway.app/";
+const prodURL = "https://fyp-smit-backend.vercel.app";
 
 export const BASE_URL = prodURL;
 
